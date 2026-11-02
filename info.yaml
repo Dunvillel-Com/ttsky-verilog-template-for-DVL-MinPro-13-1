@@ -1,56 +1,52 @@
 # Tiny Tapeout project information
 project:
-  title:        ""      # Project title
-  author:       ""      # Your name
-  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  ""      # One line description of what your project does
-  language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
-
-  # How many tiles your design occupies? A single tile is about 167x108 uM.
-  tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
-
-  # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_example"
-
-  # List your project's source files here.
-  # Source files must be in ./src and you must list each source file separately, one per line.
-  # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
+  title: "DVL MinPro 13-1 CPU"
+  author: "YOUR NAME"
+  discord: ""
+  description: "13-bit MISC-style CPU: 5 registers, 20-deep stack, 5 interrupts, 84-op ISA. Program/RAM live off-chip on a 4-bit handshaked bus."
+  language: "Verilog"
+  clock_hz: 10000000
+  # Rough estimate (~570 flops incl. a 20x13 stack, a 13x13 multiplier, two shifters).
+  # Start at 3x2 and shrink once you see real OpenLane utilisation numbers.
+  tiles: "3x2"
+  # Make this unique by adding your GitHub username, e.g. tt_um_yourname_dvl_minpro_cpu
+  # (then rename the module in src/project.v to match).
+  top_module: "tt_um_dvl_minpro_cpu"
   source_files:
     - "project.v"
+    - "dvl_minpro_core.v"
+    - "dvl_bus.v"
 
-# The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
-# This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[0]: "I0 (interrupt 0)"
+  ui[1]: "I1 (interrupt 1)"
+  ui[2]: "I2 (interrupt 2)"
+  ui[3]: "I3 (interrupt 3)"
+  ui[4]: "I4 (interrupt 4)"
+  ui[5]: "I5"
+  ui[6]: "I6"
+  ui[7]: "I7"
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
+  uo[0]: "O0"
+  uo[1]: "O1"
+  uo[2]: "O2"
+  uo[3]: "O3"
+  uo[4]: "O4"
+  uo[5]: "O5"
+  uo[6]: "O6"
+  uo[7]: "O7"
 
   # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
-  uio[3]: ""
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: ""
-  uio[7]: ""
+  uio[0]: "BUS D0 (bidirectional data nibble)"
+  uio[1]: "BUS D1"
+  uio[2]: "BUS D2"
+  uio[3]: "BUS D3"
+  uio[4]: "REQ (output: CPU requests a bus beat)"
+  uio[5]: "ACK (input: host acknowledges, must idle low)"
+  uio[6]: "O8"
+  uio[7]: "O9"
 
 # Do not change!
 yaml_version: 6
